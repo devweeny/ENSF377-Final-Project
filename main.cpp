@@ -3,7 +3,7 @@
 
 using namespace std;
 
-int printMenu() {
+int menu() {
     cout << "1. Display Flight Seat Map." << endl;
     cout << "2. Display Passengers Information." << endl;
     cout << "3. Add a New Passenger." << endl;
@@ -18,16 +18,52 @@ int printMenu() {
 
     if (choice < 1 || choice > 6) {
         cout << endl << "Invalid choice. Please try again." << endl;
-        return printMenu();
+        return menu();
     }
     return choice;
 }
 
+void printStart() {
+    cout << "Version 1.0" << endl;
+    cout << "Term Project - Flight Management Program in C++" << endl;
+    cout << "Produced by: Dylan Wenaas, Aly Farouz, Wesley Lui" << endl;
+}
+
+void menuSelect() {
+    while (true) {
+        int choice;
+        choice = menu();
+        switch (choice)
+        {
+        case 1:
+            // Print the seat map
+            break;
+        case 2:
+            // Print the passenger information
+            break;
+        case 3:
+            // Add a new passenger
+            break;
+        case 4:
+            // Remove an existing passenger
+            break;
+        case 5:
+            // Save data
+            break;
+        case 6:
+            exit(1);
+            break;
+
+        default:
+            break;
+        }
+    }
+
+}
+
 
 int main() {
-    int choice;
-    choice = printMenu();
-
-    cout << "You chose " << choice << endl;
+    printStart();
+    menuSelect();
     return 0;
 }
