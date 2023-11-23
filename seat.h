@@ -10,15 +10,15 @@
 class Seat
 {
 public:
-  Seat();
+  Seat() { rowNumber = 0; column = 'A'; status = false; }
   Seat(const Seat& source);
   ~Seat();
-  int getRowNumber();
-  char getColumn();
-  bool getStatus();
-  void setRowNumber(int rowNumber);
-  void setColumn(char column);
-  void setStatus(bool status);
+  int getRowNumber() { return rowNumber; };
+  char getColumn() { return column; }
+  bool getStatus() { return status; }
+  void setRowNumber(int row) { rowNumber = row; }
+  void setColumn(char col) { column = col; }
+  void setStatus(bool stat) { status = stat; }
 
 private:
   int rowNumber;
