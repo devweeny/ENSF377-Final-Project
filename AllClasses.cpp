@@ -1,14 +1,7 @@
-#ifndef ALLCLASSES_H
-#define ALLCLASSES_H
-
 #include <iostream>
 #include <string>
 #include <vector>
 
-// Forward declaration of Seat class used in Passenger class
-class Seat;
-
-// Seat Class
 class Seat {
 public:
     Seat() : rowNumber(0), column('A'), status(false) {}
@@ -27,7 +20,16 @@ private:
     bool status;
 };
 
-// Flight Class
+Seat::Seat(const Seat& source) {
+    this->rowNumber = source.rowNumber;
+    this->column = source.column;
+    this->status = source.status;
+}
+
+Seat::~Seat() {
+    // Perform necessary cleanup
+}
+
 class Flight {
 private:
     std::string flightID;
@@ -53,7 +55,65 @@ public:
     void setPassengers(const std::vector<std::string>& passengersList);
 };
 
-// Passenger Class
+Flight::Flight() : flightID(""), numRows(0), numColumns(0) {}
+
+Flight::Flight(const std::string& id, int rows, int columns)
+    : flightID(id), numRows(rows), numColumns(columns) {
+    seatMap.resize(numRows, std::vector<bool>(numColumns, false));
+}
+
+Flight::Flight(const Flight& other) {
+    this->flightID = other.flightID;
+    this->numRows = other.numRows;
+    this->numColumns = other.numColumns;
+    this->seatMap = other.seatMap;
+    this->passengers = other.passengers;
+}
+
+Flight::~Flight() {
+    // Perform any necessary cleanup here
+}
+
+std::string Flight::getFlightID() const {
+    return flightID;
+}
+
+void Flight::setFlightID(const std::string& id) {
+    flightID = id;
+}
+
+int Flight::getNumRows() const {
+    return numRows;
+}
+
+void Flight::setNumRows(int rows) {
+    numRows = rows;
+}
+
+int Flight::getNumColumns() const {
+    return numColumns;
+}
+
+void Flight::setNumColumns(int columns) {
+    numColumns = columns;
+}
+
+std::vector<std::vector<bool>> Flight::getSeatMap() const {
+    return seatMap;
+}
+
+void Flight::setSeatMap(const std::vector<std::vector<bool>>& map) {
+    seatMap = map;
+}
+
+std::vector<std::string> Flight::getPassengers() const {
+    return passengers;
+}
+
+void Flight::setPassengers(const std::vector<std::string>& passengersList) {
+    passengers = passengersList;
+}
+
 class Passenger {
 public:
     Passenger() : firstName(""), lastName(""), phoneNo(""), passengerID(0), passengerSeat(nullptr) {}
@@ -79,7 +139,13 @@ private:
     Seat* passengerSeat;
 };
 
-// Airline Class
+Passenger::Passenger(const std::string& fName, const std::string& lName, const std::string& pNo, int pID, Seat* pSeat)
+    : firstName(fName), lastName(lName), phoneNo(pNo), passengerID(pID), passengerSeat(pSeat) {}
+
+Passenger::Passenger(const Passenger& source) {
+    this->firstName = source.firstName;
+    this->lastName = source.lastName;
+}
 class Airline {
 private:
     std::string airlineName;
@@ -98,4 +164,38 @@ public:
     void addFlight(const Flight& newFlight);
 };
 
-#endif // ALLCLASSES_H
+
+Airline::Airline() : airlineName(""), numOfFlights(0) {}
+
+Airline::Airline(const std::string& name) : airlineName(name), numOfFlights(0) {}
+
+Airline::Airline(const Airline& other) {
+    this->airlineName = other.airlineName; 
+    this->flights = other.flights;
+    this->numOfFlights = other.numOfFlights;
+} 
+
+Airline::~Airline() {
+    // Perform any necessary cleanup here
+}
+
+std::string Airline::getAirlineName() const {
+    return airlineName;
+}
+
+void Airline::setAirlineName(const std::string& name) {
+    airlineName = name;
+}
+
+int Airline::getNumOfFlights() const {
+    return numOfFlights;
+} 
+
+void Airline::setNumOfFlights(int num) {
+    numOfFlights = num;
+}
+
+void Airline::addFlight(const Flight& newFlight) {
+    flights.push_back(newFlight);
+    numOfFlights++;
+}
