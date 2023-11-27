@@ -4,8 +4,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <fstream>
+#include <list> 
 
-// Forward declaration of Seat class used in Passenger class
+
 class Seat;
 
 // Seat Class
@@ -26,34 +28,6 @@ private:
     char column;
     bool status;
 };
-
-// Flight Class
-class Flight {
-private:
-    std::string flightID;
-    int numRows;
-    int numColumns;
-    std::vector<std::vector<bool>> seatMap;
-    std::vector<std::string> passengers;
-
-public:
-    Flight();
-    Flight(const std::string& id, int rows, int columns);
-    Flight(const Flight& other);
-    ~Flight();
-    std::string getFlightID() const;
-    void setFlightID(const std::string& id);
-    int getNumRows() const;
-    void setNumRows(int rows);
-    int getNumColumns() const;
-    void setNumColumns(int columns);
-    std::vector<std::vector<bool>> getSeatMap() const;
-    void setSeatMap(const std::vector<std::vector<bool>>& map);
-    std::vector<std::string> getPassengers() const;
-    void setPassengers(const std::vector<std::string>& passengersList);
-};
-
-// Passenger Class
 class Passenger {
 public:
     Passenger() : firstName(""), lastName(""), phoneNo(""), passengerID(0), passengerSeat(nullptr) {}
@@ -76,8 +50,47 @@ private:
     std::string lastName;
     std::string phoneNo;
     int passengerID;
-    Seat* passengerSeat;
+    Seat* passengerSeat; // Pointer to the seat object
 };
+
+
+// Flight Class
+class Flight {
+private:
+    std::string flightID;
+    int numRows;
+    int numColumns;
+    std::vector<std::vector<bool>> seatMap;
+    std::vector<std::string> passengers;
+    std::list<Passenger> passengerList;
+
+public:
+    Flight();
+    Flight(const std::string& id, int rows, int columns);
+    Flight(const Flight& other);
+    ~Flight();
+    std::string getFlightID() const;
+    void setFlightID(const std::string& id);
+    int getNumRows() const;
+    void setNumRows(int rows);
+    int getNumColumns() const;
+    void setNumColumns(int columns);
+    std::vector<std::vector<bool>> getSeatMap() const;
+    void setSeatMap(const std::vector<std::vector<bool>>& map);
+    std::vector<std::string> getPassengers() const;
+    void setPassengers(const std::vector<std::string>& passengersList);
+    void readFlightDataFromFile(const std::string& filename);
+    void displaySeatMap() const;
+    void displayPassengersInformation() const;
+    void addPassenger(const std::string& firstName, const std::string& lastName, const std::string& phoneNo,  int& passengerID,Seat* passengerSeat);
+    void removePassenger(const std::string& firstName, const std::string& lastName);
+    void saveFlightDataToFile(const std::string& filename) const;
+};
+
+// Passenger Class
+
+
+
 
 // Airline Class
 class Airline {
