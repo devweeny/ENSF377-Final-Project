@@ -1,6 +1,4 @@
-#include "seat.h"
-#include <iostream>
-
+#include "AllClasses.h"
 using namespace std;
 
 int menu() {
@@ -29,26 +27,36 @@ void printStart() {
     cout << "Produced by: Dylan Wenaas, Aly Farouz, Wesley Lui" << endl;
 }
 
-void menuSelect() {
+void menuSelect(Flight& flight) {
     while (true) {
+        string firstName, lastName, phoneNo;
         int choice;
         choice = menu();
         switch (choice)
         {
         case 1:
-            // Print the seat map
+            flight.displaySeatMap();
             break;
         case 2:
-            // Print the passenger information
+            flight.displayPassengersInformation();
             break;
         case 3:
-            // Add a new passenger
+            cout << "Enter passenger's first name: ";
+            cin >> firstName;
+            cout << "Enter passenger's last name: ";
+            cin >> lastName;
+            cout << "Enter passenger's phone number: ";
+            cin >> phoneNo;
+            flight.addPassenger(firstName, lastName, phoneNo);
             break;
         case 4:
-            // Remove an existing passenger
+            cout << "Enter passenger's first name: ";
+            cin >> firstName;
+            cout << "Enter passenger's last name: ";
+            flight.removePassenger(firstName, lastName);
             break;
         case 5:
-            // Save data
+            flight.writeFlightDataToFile("flight_data.txt");
             break;
         case 6:
             exit(1);
@@ -63,7 +71,9 @@ void menuSelect() {
 
 
 int main() {
+    Flight flight;
+    flight.readFlightDataFromFile("flight_info.txt");
     printStart();
-    menuSelect();
+    menuSelect(flight);
     return 0;
 }
