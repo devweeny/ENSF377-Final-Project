@@ -1,6 +1,4 @@
 #include "AllClasses.h"
-#include <iostream>
-
 using namespace std;
 
 int menu() {
@@ -31,6 +29,7 @@ void printStart() {
 
 void menuSelect(Flight& flight) {
     while (true) {
+        string firstName, lastName, phoneNo;
         int choice;
         choice = menu();
         switch (choice)
@@ -42,27 +41,22 @@ void menuSelect(Flight& flight) {
             flight.displayPassengersInformation();
             break;
         case 3:
-            std::string firstName, lastName, phoneNo;
-            int passengerID; // Initialize passengerID
-            Seat* passengerSeat = nullptr;
-            std::cout << "Enter passenger's first name: ";
-            std::cin >> firstName;
-            std::cout << "Enter passenger's last name: ";
-            std::cin >> lastName;
-            std::cout << "Enter passenger's phone number: ";
-            std::cin >> phoneNo;
-            flight.addPassenger(firstName, lastName, phoneNo,passengerID,passengerSeat);
+            cout << "Enter passenger's first name: ";
+            cin >> firstName;
+            cout << "Enter passenger's last name: ";
+            cin >> lastName;
+            cout << "Enter passenger's phone number: ";
+            cin >> phoneNo;
+            flight.addPassenger(firstName, lastName, phoneNo);
             break;
         case 4:
-            std::string firstName, lastName;
-            std::cout << "Enter passenger's first name: ";
-            std::cin >> firstName;
-            std::cout << "Enter passenger's last name: ";
+            cout << "Enter passenger's first name: ";
+            cin >> firstName;
+            cout << "Enter passenger's last name: ";
             flight.removePassenger(firstName, lastName);
             break;
         case 5:
-            std::string filename = "flight_data.txt";
-            flight.saveFlightDataToFile(filename);
+            flight.writeFlightDataToFile("flight_data.txt");
             break;
         case 6:
             exit(1);

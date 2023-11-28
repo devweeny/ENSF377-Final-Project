@@ -1,8 +1,5 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <fstream>
 #include "AllClasses.h"
+using namespace std;
 
 class Seat {
 public:
@@ -150,13 +147,14 @@ void Flight::readFlightDataFromFile(const std::string& filename) {
 void Flight::displaySeatMap() const {
     std::vector<std::vector<bool>> seatMap = this->getSeatMap();
 
-   
+
     for (const auto& row : seatMap) {
         for (bool status : row) {
             if (status) {
-                cout << "O "; 
-            } else {
-                cout << "A "; 
+                cout << "O ";
+            }
+            else {
+                cout << "A ";
             }
         }
         cout << endl;
@@ -171,8 +169,8 @@ void Flight::displayPassengersInformation() const {
         cout << endl;
     }
 }
-void Flight::addPassenger(const std::string& firstName, const std::string& lastName, const std::string& phoneNo,  int& passengerID,Seat* passengerSeat) {
-    Passenger newPassenger(firstName, lastName, phoneNo,passenegerID,passengerSeat);
+void Flight::addPassenger(const std::string& firstName, const std::string& lastName, const std::string& phoneNo, int& passengerID, Seat* passengerSeat) {
+    Passenger newPassenger(firstName, lastName, phoneNo, passenegerID, passengerSeat);
     passengers.push_back(newPassenger);
 }
 void Flight::removePassenger(const std::string& firstName, const std::string& lastName) {
@@ -189,8 +187,8 @@ void Flight::saveFlightDataToFile(const std::string& filename) const {
     std::ofstream outFile(filename);
 
     if (outFile.is_open()) {
-        outFile <<flight.flightID << "\n";
-        outFile <<  flight.numRows << "\n";
+        outFile << flight.flightID << "\n";
+        outFile << flight.numRows << "\n";
         outFile << flight.numColumns << "\n";
         for (const auto& row : flight.seatMap) {
             for (const char& seat : row) {
@@ -206,7 +204,8 @@ void Flight::saveFlightDataToFile(const std::string& filename) const {
 
         outFile.close();
         cout << "Flight data saved to " << filename << " successfully." << endl;
-    } else {
+    }
+    else {
         cout << "Unable to open file: " << filename << endl;
     }
 }
@@ -253,7 +252,7 @@ Passenger::Passenger(const Passenger& source) {
     this->lastName = source.lastName;
     this->phoneNo = source.phoneNo;
     this->passengerID = source.passengerID;
-    this->passengerSeat = source.passengerSeat; 
+    this->passengerSeat = source.passengerSeat;
 }
 Passenger::~Passenger() {
     // Perform any necessary cleanup
@@ -283,10 +282,10 @@ Airline::Airline() : airlineName(""), numOfFlights(0) {}
 Airline::Airline(const std::string& name) : airlineName(name), numOfFlights(0) {}
 
 Airline::Airline(const Airline& other) {
-    this->airlineName = other.airlineName; 
+    this->airlineName = other.airlineName;
     this->flights = other.flights;
     this->numOfFlights = other.numOfFlights;
-} 
+}
 
 Airline::~Airline() {
     // Perform any necessary cleanup here
@@ -302,7 +301,7 @@ void Airline::setAirlineName(const std::string& name) {
 
 int Airline::getNumOfFlights() const {
     return numOfFlights;
-} 
+}
 
 void Airline::setNumOfFlights(int num) {
     numOfFlights = num;

@@ -1,27 +1,26 @@
 #ifndef AIRLINE_H
 #define AIRLINE_H
+using namespace std;
 
-#include <string>
-#include <vector>
-#include "Flight.h"
+#include "AllClasses.h"
 
 class Airline {
 private:
-    std::string airlineName;
-    std::vector<Flight> flights;
+    string airlineName;
+    vector<Flight> flights;
     int numOfFlights;
 
 public:
     Airline();
-    Airline(const std::string &name);
-    Airline(const Airline &other);
+    Airline(const string& name);
+    Airline(const Airline& other);
     ~Airline();
-    
-    std::string getAirlineName() const;
-    void setAirlineName(const std::string &name);
+
+    string getAirlineName() const;
+    void setAirlineName(const string& name);
     int getNumOfFlights() const;
     void setNumOfFlights(int num);
-    void addFlight(const Flight &newFlight);
+    void addFlight(const Flight& newFlight);
 };
 
 #endif // AIRLINE_H

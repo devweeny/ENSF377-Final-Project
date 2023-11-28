@@ -1,7 +1,6 @@
 
 #ifndef SEAT_H
 #define SEAT_H
-#endif
 
 
 class Seat
@@ -22,3 +21,5 @@ private:
   char column;
   bool status;
 };
+
+#endif
