@@ -59,35 +59,6 @@ void Flight::setSeatMap(const std::vector<std::vector<bool>>& map) {
 }
 
 std::vector<std::string> Flight::getPassengers() const {
-    //TODO: formatting columns for printing the table of info
-    if (passengers.empty()) {
-        cout << "No passengers to display." << endl;
-        return;
-    }
-
-    cout << "Passenger Information:" << endl;
-    cout << "-------------------------------------------------------------" << endl;
-    cout << "First Name | Last Name | Phone Number | Row | Column | Passenger ID" << endl;
-    cout << "-------------------------------------------------------------" << endl;
-    
-    for (const Passenger& passenger : passengers) {
-        //TODO: not sure how to loop through all our passengers to print all their info
-        cout << passenger.getFirstName() << " | "
-             << passenger.getLastName() << " | "
-             << passenger.getPhoneNo() << " | ";
-
-        Seat* passengerSeat = passenger.getPassengerSeat();
-        if (passengerSeat) {
-            cout << passengerSeat->getRowNumber() << " | "
-                 << passengerSeat->getColumn() << " | ";
-        } else {
-            cout << "N/A | N/A | ";
-        }
-
-        cout << passenger.getPassengerID() << endl;
-        cout << "-------------------------------------------------------------" << endl;
-    }
-    
     return passengers;
 }
 

@@ -1,4 +1,5 @@
 #include "AllClasses.h"
+#include "Pmain.h"
 #include <iostream>
 
 using namespace std;
@@ -36,10 +37,10 @@ void menuSelect(Flight& flight) {
         switch (choice)
         {
         case 1:
-            flight.displaySeatMap();
+            displaySeatMap(Flight& flight);
             break;
         case 2:
-            flight.displayPassengersInformation();
+            displayPassengersInformation();
             break;
         case 3:
             std::string firstName, lastName, phoneNo;
@@ -75,7 +76,6 @@ void menuSelect(Flight& flight) {
 
 }
 
-
 int main() {
     Flight flight;
     flight.readFlightDataFromFile("flight_info.txt");
@@ -84,3 +84,73 @@ int main() {
     return 0;
 }
 
+void displaySeatMap(Flight& flight){
+    
+}
+
+void displayPassengersInformation(Flight& flight){
+    //TODO: formatting columns for printing the table of info
+    
+    if (passengers.empty()) {
+        cout << "No passengers to display." << endl;
+        return;
+    }
+
+    cout << "Passenger Information:" << endl;
+    cout << "-------------------------------------------------------------" << endl;
+    cout << "First Name | Last Name | Phone Number | Row | Seat | ID" << endl;
+    cout << "-------------------------------------------------------------" << endl;
+    
+    for (const Passenger& passenger : passengers) {
+        //TODO: not sure how to loop through all our passengers to print all their info[]
+        cout << passenger.getFirstName() << " | "
+             << passenger.getLastName() << " | "
+             << passenger.getPhoneNo() << " | ";
+
+        Seat* passengerSeat = passenger.getPassengerSeat();
+        if (passengerSeat) {
+            cout << passengerSeat->getRowNumber() << " | "
+                 << passengerSeat->getColumn() << " | ";
+        } else {
+            cout << "N/A | N/A | ";
+        }
+
+        cout << passenger.getPassengerID() << endl;
+        cout << "-------------------------------------------------------------" << endl;
+    }
+}
+
+void addPassenger(firstName, lastName, phoneNo,passengerID,passengerSeat){
+
+}
+
+void removePassenger(firstName, lastName){
+    
+}
+
+void saveFlightDataToFile(const string& filename) const {
+    ofstream outFile(filename);
+
+    if (outFile.is_open()) {
+        outFile << flightID << "\n";
+        outFile << numRows << "\n";
+        outFile << numColumns << "\n";
+        for (const auto& row : seatMap) {
+            for (const char& seat : row) {
+                outFile << seat << " ";
+            }
+            outFile << "\n";
+        }
+        for (const Passenger& passenger : getPassengers()) {
+            outFile << passenger.getFirstName() << "\n";
+            outFile << passenger.getLastName() << "\n";
+            outFile << passenger.getPhoneNo() << "\n\n";
+        }
+
+        outFile.close();
+        cout << "Flight data saved to " << filename << " successfully." << endl;
+    }
+    else {
+        cout << "Unable to open file: " << filename << endl;
+    }
+}
