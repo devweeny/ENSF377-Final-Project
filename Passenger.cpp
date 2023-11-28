@@ -1,5 +1,6 @@
 //PASSENGER CPP FILE
 #include "Passenger.h"
+#include "seat.h"
 using namespace std;
 
 //Default Constructor

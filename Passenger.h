@@ -1,6 +1,7 @@
 //PASSENGER HEADER FILE
 #include <iostream>
 #include <string>
+#include "seat.h"
 using namespace std;
 
 #ifndef Passenger_h

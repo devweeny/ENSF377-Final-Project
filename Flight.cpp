@@ -1,4 +1,7 @@
+#include <iostream>
 #include "Flight.h"
+#include "AllClasses.h"
+using namespace std;
 
 Flight::Flight() : flightID(""), numRows(0), numColumns(0) {
     // Initialize seat map and other members as needed
@@ -56,6 +59,34 @@ void Flight::setSeatMap(const std::vector<std::vector<bool>>& map) {
 }
 
 std::vector<std::string> Flight::getPassengers() const {
+    if (passengers.empty()) {
+        cout << "No passengers to display." << endl;
+        return;
+    }
+
+    cout << "Passenger Information:" << endl;
+    cout << "-------------------------------------------------------------" << endl;
+    cout << "First Name | Last Name | Phone Number | Row | Column | Passenger ID" << endl;
+    cout << "-------------------------------------------------------------" << endl;
+    
+    for (const Passenger& passenger : passengers) {
+        //const prevents modification while allowing the reference of other passengers
+        cout << passenger.getFirstName() << " | "
+             << passenger.getLastName() << " | "
+             << passenger.getPhoneNo() << " | ";
+
+        Seat* passengerSeat = passenger.getPassengerSeat();
+        if (passengerSeat) {
+            cout << passengerSeat->getRowNumber() << " | "
+                 << passengerSeat->getColumn() << " | ";
+        } else {
+            cout << "N/A | N/A | ";
+        }
+
+        cout << passenger.getPassengerID() << endl;
+        cout << "-------------------------------------------------------------" << endl;
+    }
+    
     return passengers;
 }
 
