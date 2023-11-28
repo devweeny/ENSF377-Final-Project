@@ -1,0 +1,34 @@
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "xprotocol",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 33060,
+            "driver": "MySQL",
+            "name": "finalProject",
+            "database": "olympicarchery",
+            "username": "root",
+            "password": "Aly5931564",
+            "connectionTimeout": 1000
+        },
+        {
+            "mysqlOptions": {
+                "authProtocol": "xprotocol",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 33060,
+            "driver": "MySQL",
+            "name": "ArtsMuseumProject",
+            "database": "ArtsMuseum",
+            "username": "root",
+            "password": "Aly5931564",
+            "connectionTimeout": 1000
+        }
+    ]
+}
