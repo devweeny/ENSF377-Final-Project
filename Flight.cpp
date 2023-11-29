@@ -8,7 +8,7 @@ void Flight::show_seat_map() {
     std::cout << "Seat Map for Flight " << flightNumber << ":" << std::endl;
 
     // Display column letters
-    std::cout << "      ";
+    std::cout << "     ";
     for (int i = 0; i < seatsPerRow; ++i) {
         std::cout << static_cast<char>('A' + i) << "   ";
     }
@@ -22,14 +22,14 @@ void Flight::show_seat_map() {
             for (size_t k = 0; k < passengerList.size(); ++k) {
                 int row = passengerList[k].getAssignedSeat()->getRow();
                 char seat = passengerList[k].getAssignedSeat()->getSeat();
-                if (row == i && seat == static_cast<char>('A' + j)) {
+                if (row == i && j == seat - 'A') {
                     std::cout << "| X ";
                     isOccupied = true;
                     break;
                 }
             }
             if (!isOccupied) {
-                std::cout << "| O ";
+                std::cout << "|   ";
             }
         }
         std::cout << "|" << std::endl << "   ";
@@ -41,13 +41,6 @@ void Flight::show_seat_map() {
 }
 
 
-
-
-
-
-
-
-
 void Flight::show_passenger_info(const std::string& filename) {
     std::ifstream file(filename);
     if (file.is_open()) {
@@ -55,66 +48,83 @@ void Flight::show_passenger_info(const std::string& filename) {
         if (std::getline(file, flightInfo)) {
             std::cout << "Flight Information:" << std::endl;
             std::cout << flightInfo << std::endl;
-        } else {
+        }
+        else {
             std::cerr << "Empty file or missing flight information." << std::endl;
             return;
         }
 
         // Print header
         std::cout << std::left << std::setw(20) << "| First Name"
-                  << std::left << std::setw(20) << "| Last Name"
-                  << std::left << std::setw(20) << "| Phone Number"
-                  << std::left << std::setw(8) << "| Seat"
-                  << std::left << std::setw(8) << "| ID" << "|" << std::endl;
+            << std::left << std::setw(20) << "| Last Name"
+            << std::left << std::setw(20) << "| Phone Number"
+            << std::left << std::setw(8) << "| Seat"
+            << std::left << std::setw(8) << "| ID" << "|" << std::endl;
 
         // Separator line
         std::cout << std::setfill('-') << std::setw(76) << "|" << std::setfill(' ') << std::endl;
 
         std::string line;
         while (std::getline(file, line)) {
-            std::istringstream iss(line);
+            // 0-19, 20-39, 40-59, 60-67, 68-75 of each line
+            // std::istringstream iss(line);
             std::string firstName, lastName, phoneNumber, seat, idString;
-
-            iss >> std::setw(20) >> firstName
-                >> std::setw(20) >> lastName
-                >> std::setw(20) >> phoneNumber
-                >> std::setw(8) >> seat
-                >> std::setw(8) >> idString;
+            firstName = line.substr(0, 20);
+            // trim whitespace off each string
+            firstName.erase(firstName.find_last_not_of(" \n\r\t") + 1);
+            lastName = line.substr(20, 20);
+            lastName.erase(lastName.find_last_not_of(" \n\r\t") + 1);
+            phoneNumber = line.substr(40, 20);
+            phoneNumber.erase(phoneNumber.find_last_not_of(" \n\r\t") + 1);
+            seat = line.substr(60, 4);
+            seat.erase(seat.find_last_not_of(" \n\r\t") + 1);
+            idString = line.substr(64, 8);
+            idString.erase(idString.find_last_not_of(" \n\r\t") + 1);
 
             int idNumber = std::stoi(idString);
 
             // Print data with vertical lines
             std::cout << std::left << std::setw(20) << "| " + firstName
-                      << std::left << std::setw(20) << "| " + lastName
-                      << std::left << std::setw(20) << "| " + phoneNumber
-                      << std::left << std::setw(8) << "| " + seat
-                      << std::left << std::setw(8) << "| " + std::to_string(idNumber) << "|" << std::endl;
+                << std::left << std::setw(20) << "| " + lastName
+                << std::left << std::setw(20) << "| " + phoneNumber
+                << std::left << std::setw(8) << "| " + seat
+                << std::left << std::setw(8) << "| " + std::to_string(idNumber) << "|" << std::endl;
 
             // Separator line after each row
             std::cout << std::setfill('-') << std::setw(76) << "|" << std::setfill(' ') << std::endl;
         }
         std::cout << std::endl;
         file.close();
-    } else {
+    }
+    else {
         std::cerr << "Unable to open file: " << filename << std::endl;
     }
 }
 
 void Flight::add_passenger() {
     std::string firstName, lastName, phoneNumber;
-    int idNumber;
+    int idNumber, row;
     std::cout << "Enter first name: ";
     std::cin >> firstName;
+    std::cin.clear();
+    std::cin.ignore(10000, '\n');
     std::cout << "Enter last name: ";
     std::cin >> lastName;
+    std::cin.clear();
+    std::cin.ignore(10000, '\n');
     std::cout << "Enter phone number: ";
     std::cin >> phoneNumber;
+    std::cin.clear();
+    std::cin.ignore(10000, '\n');
     std::cout << "Enter seat row (number): ";
-    int row;
     std::cin >> row;
+    std::cin.clear();
+    std::cin.ignore(10000, '\n');
     std::cout << "Enter seat (character): ";
     char seat;
     std::cin >> seat;
+    std::cin.clear();
+    std::cin.ignore(10000, '\n');
     std::cout << "Enter ID number: ";
     std::cin >> idNumber;
 
@@ -135,6 +145,8 @@ void Flight::add_passenger() {
     Passenger newPassenger(firstName, lastName, phoneNumber, &newSeat, idNumber);
     passengerList.push_back(newPassenger);
     std::cout << "Passenger added to Flight " << flightNumber << "." << std::endl;
+
+    save_passenger_info("flight_info.txt");
 }
 
 
@@ -153,19 +165,39 @@ void Flight::remove_passenger() {
     std::cout << "Passenger with ID " << id << " not found in Flight " << flightNumber << "." << std::endl;
 }
 
+// void Flight::save_passenger_info(const std::string& filename) {
+//     std::ofstream file(filename);
+//     if (file.is_open()) {
+//         file << flightNumber << " " << numRows << " " << seatsPerRow << std::endl;
+
+//         for (std::vector<Passenger>::const_iterator it = passengerList.begin(); it != passengerList.end(); ++it) {
+//             file << std::setw(20) << it->getFirstName() << std::setw(20) << it->getLastName() << std::setw(8)
+//                 << it->getPhoneNumber() << std::setw(4) << std::to_string(it->getAssignedSeat()->getRow())
+//                 << it->getAssignedSeat()->getSeat() << std::setw(8) << std::to_string(it->getIdNumber()) << std::endl;
+//         }
+//         file.close();
+//         std::cout << "Passenger information saved to file." << std::endl;
+//     }
+//     else {
+//         std::cerr << "Unable to open file: " << filename << std::endl;
+//     }
+// }
+
 void Flight::save_passenger_info(const std::string& filename) {
     std::ofstream file(filename);
     if (file.is_open()) {
-        file << flightNumber << " " << numRows << " " << seatsPerRow << std::endl;
+        file << std::setw(10) << flightNumber << std::setw(4) << numRows << std::setw(4) << seatsPerRow << std::endl;
 
-        for (std::vector<Passenger>::const_iterator it = passengerList.begin(); it != passengerList.end(); ++it) {
-            file << it->getFirstName() << " " << it->getLastName() << " "
-                 << it->getPhoneNumber() << " " << it->getAssignedSeat()->getRow()
-                 << it->getAssignedSeat()->getSeat() << " " << it->getIdNumber() << std::endl;
+        for (const Passenger& passenger : passengerList) {
+            Seat* assignedSeat = passenger.getAssignedSeat();
+            file << std::setw(20) << passenger.getFirstName() << std::setw(20) << passenger.getLastName()
+                << std::setw(15) << passenger.getPhoneNumber() << std::setw(4) << assignedSeat->getRow()
+                << " " << assignedSeat->getSeat() << std::setw(8) << passenger.getIdNumber() << std::endl;
         }
         file.close();
         std::cout << "Passenger information saved to file." << std::endl;
-    } else {
+    }
+    else {
         std::cerr << "Unable to open file: " << filename << std::endl;
     }
 }
