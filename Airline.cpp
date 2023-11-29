@@ -43,7 +43,7 @@ void Airline::menu(Flight& flight, const std::string& filename) {
             flight.show_seat_map();
             break;
         case 2:
-            flight.show_passenger_info(filename);
+            flight.show_passenger_info();
             break;
         case 3:
             flight.add_passenger();
