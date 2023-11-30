@@ -168,7 +168,7 @@ void Flight::remove_passenger() {
 
 void Flight::save_passenger_info(const std::string& filename) {
     char confirm;
-    std::cout << "Do you want to save the data in file? (Y/N): ";
+	std::cout << "Do you want to save the data in " << filename << "file? (Y/N): ";
     std::cin >> confirm;
 
     if (confirm == 'Y' || confirm == 'y') {
