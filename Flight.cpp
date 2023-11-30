@@ -49,7 +49,7 @@ void Flight::show_passenger_info() {
         << std::left << std::setw(8) << "| Seat"
         << std::left << std::setw(8) << "| ID" << "|" << std::endl;
 
-    // Separator line
+    // Separator line bw table header and passenger info
     std::cout << std::setfill('-') << std::setw(76) << "|" << std::setfill(' ') << std::endl;
 
     for (size_t i = 0; i < passengerList.size(); ++i) {

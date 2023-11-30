@@ -51,5 +51,11 @@ void Airline::menu(Flight& flight, const std::string& filename) {
             std::cout << "Invalid choice. Please try again." << std::endl;
             break;
         }
+
+        if (choice != 6) {
+            std::cout << "Press Enter to continue...";
+            std::cin.get(); // Wait for user to press Enter
+        }
+        
     } while (choice != 6);
 }
