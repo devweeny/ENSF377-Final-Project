@@ -167,22 +167,29 @@ void Flight::remove_passenger() {
 
 
 void Flight::save_passenger_info(const std::string& filename) {
-    std::ofstream file(filename);
-    if (file.is_open()) {
-        file << std::left << std::setw(9) << flightNumber << std::setw(6) << numRows << std::setw(6) << seatsPerRow << std::endl;
+    char confirm;
+    std::cout << "Do you want to save the data in file? (Y/N): ";
+    std::cin >> confirm;
 
-        for (const Passenger& passenger : passengerList) {
-            Seat* assignedSeat = passenger.getAssignedSeat();
-            file << std::left << std::setw(20) << passenger.getFirstName() << std::setw(20) << passenger.getLastName()
-                << std::setw(20) << passenger.getPhoneNumber() << std::setw(4) << std::to_string(assignedSeat->getRow()) + assignedSeat->getSeat()
-                << std::setw(8) << passenger.getIdNumber() << std::endl;
-            // clear the buffer
-            file.flush();
+    if (confirm == 'Y' || confirm == 'y') {
+        std::ofstream file(filename);
+        if (file.is_open()) {
+            file << std::left << std::setw(9) << flightNumber << std::setw(6) << numRows << std::setw(6) << seatsPerRow << std::endl;
+
+            for (const Passenger& passenger : passengerList) {
+                Seat* assignedSeat = passenger.getAssignedSeat();
+                file << std::left << std::setw(20) << passenger.getFirstName() << std::setw(20) << passenger.getLastName()
+                    << std::setw(20) << passenger.getPhoneNumber() << std::setw(4) << std::to_string(assignedSeat->getRow()) + assignedSeat->getSeat()
+                    << std::setw(8) << passenger.getIdNumber() << std::endl;
+                // clear the buffer
+                file.flush();
+            }
+            file.close();
+            std::cout << "Passenger information saved to file." << std::endl;
+        } else {
+            std::cerr << "Unable to open file: " << filename << std::endl;
         }
-        file.close();
-        std::cout << "Passenger information saved to file." << std::endl;
-    }
-    else {
-        std::cerr << "Unable to open file: " << filename << std::endl;
+    } else {
+        std::cout << "File not saved." << std::endl;
     }
 }

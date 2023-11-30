@@ -22,7 +22,7 @@ void Airline::populate_flight_from_file(Flight& flight, const std::string& filen
 void Airline::menu(Flight& flight, const std::string& filename) {
     int choice;
     do {
-        std::cout << "Menu:\n1. Show Seat Map\n2. Show Passenger Information\n3. Add Passenger\n4. Remove Passenger\n5. Save Passenger Information\n6. Exit" << std::endl;
+        std::cout << "\nMenu:\n1. Show Seat Map\n2. Show Passenger Information\n3. Add Passenger\n4. Remove Passenger\n5. Save Passenger Information\n6. Exit" << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> choice;
         std::cin.clear();
@@ -53,7 +53,7 @@ void Airline::menu(Flight& flight, const std::string& filename) {
         }
 
         if (choice != 6) {
-            std::cout << "Press Enter to continue...";
+            std::cout << "<<<Press Return to continue...>>>";
             std::cin.get(); // Wait for user to press Enter
         }
         
