@@ -11,17 +11,7 @@ void Airline::populate_flight_from_file(Flight& flight, const std::string& filen
     std::ifstream file(filename);
     if (file.is_open()) {
         file >> flight.flightNumber >> flight.numRows >> flight.seatsPerRow;
-
-        // Read passenger information
-        std::string firstName, lastName, phoneNumber, seat;
-        int idNumber;
-        while (file >> firstName >> lastName >> phoneNumber >> seat >> idNumber) {
-            int row = std::stoi(seat.substr(0, seat.length() - 1));
-            char seatChar = seat[seat.length() - 1];
-            Seat passengerSeat(row, seatChar);
-            Passenger passenger(firstName, lastName, phoneNumber, &passengerSeat, idNumber);
-            flight.passengerList.push_back(passenger);
-        }
+        flight.load_passenger_info(filename);
         file.close();
     }
     else {
